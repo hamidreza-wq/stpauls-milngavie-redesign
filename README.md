@@ -6,3 +6,7 @@ This is **not** the official site. The official site is https://stpaulsmilngavie
 
 - Text, service times and links come from the current home page; photos load from the church's site.
 - Hero video: "Burning candles inside a church" from [Mixkit](https://mixkit.co/free-stock-video/churches/) (Mixkit Stock Video Free License). To use your own clip, add `hero.mp4` and set `HERO_MP4 = "hero.mp4"` in the script.
+
+## Portfolio
+
+Read more about this project on [Hamid Reza Bayat's portfolio](https://hamidbayat.co.uk/projects/st-pauls-milngavie-redesign).
