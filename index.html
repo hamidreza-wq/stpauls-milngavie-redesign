@@ -75,12 +75,8 @@
   /* ---------- Hero ---------- */
   .hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;color:#fff;overflow:hidden;padding:0 0 clamp(48px,8vh,96px);background:#0b0f19}
   .hero-media{position:absolute;inset:0;z-index:0}
-  .hero-poster{position:absolute;inset:0;background:url("https://stpaulsmilngavie.org.uk/1/images/StPauls/facebook/20260509church.jpg") center/cover;animation:kb 24s ease-in-out infinite alternate}
-  @keyframes kb{from{transform:scale(1.05)}to{transform:scale(1.18) translate(-1.5%,-1%)}}
-  .hero-media video,.hero-media iframe{position:absolute;top:50%;left:50%;border:0;pointer-events:none;opacity:0;transition:opacity 1.6s ease}
-  .hero-media video{width:100%;height:100%;object-fit:cover;transform:translate(-50%,-50%)}
-  .hero-media iframe{width:max(100vw,177.78svh);height:max(56.25vw,100svh);transform:translate(-50%,-50%) scale(1.15)}
-  .hero-media .ready{opacity:1}
+  .hero-poster{position:absolute;inset:0;background:url("images/hero-sanctuary.jpg") center 35%/cover;animation:kb 30s ease-in-out infinite alternate}
+  @keyframes kb{from{transform:scale(1.02)}to{transform:scale(1.1) translate(0,-1%)}}
   .hero::after{content:"";position:absolute;inset:0;z-index:1;background:
     linear-gradient(180deg,rgba(11,15,25,.55) 0%,rgba(11,15,25,.15) 35%,rgba(11,15,25,.55) 70%,rgba(11,15,25,.92) 100%)}
   .hero-inner{position:relative;z-index:2}
@@ -96,7 +92,6 @@
   .times div{background:rgba(11,15,25,.45);padding:18px 24px;min-width:150px}
   .times b{display:block;font-family:Fraunces,serif;font-weight:400;font-size:1.9rem;line-height:1}
   .times span{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.7)}
-  .video-toggle{position:absolute;right:16px;top:96px;z-index:3;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.4);background:rgba(0,0,0,.25);color:#fff;cursor:pointer;display:grid;place-items:center;backdrop-filter:blur(8px)}
   .scroll-cue{position:absolute;left:50%;bottom:18px;z-index:3;width:1px;height:42px;background:linear-gradient(#fff,transparent);animation:cue 2.2s infinite}
   @keyframes cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 
@@ -219,15 +214,11 @@
   </div>
 </header>
 
-<!-- ================= HERO (video) ================= -->
+<!-- ================= HERO (sanctuary photo) ================= -->
 <section class="hero" aria-label="Welcome">
-  <div class="hero-media" id="heroMedia" aria-hidden="true">
+  <div class="hero-media" aria-hidden="true">
     <div class="hero-poster"></div>
-    <!-- Video is injected by the script below (local MP4 if set, otherwise the latest service on YouTube, muted). -->
   </div>
-  <button class="video-toggle" id="videoToggle" aria-label="Pause background video" hidden>
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h3v14H7zM14 5h3v14h-3z"/></svg>
-  </button>
 
   <div class="wrap hero-inner">
     <p class="eyebrow">Church of Scotland · Milngavie &amp; Baldernock</p>
@@ -407,41 +398,6 @@
 </footer>
 
 <script>
-/* ---- HERO VIDEO ----
-   Best: a short (15–30s), silent, looping MP4 clip of the church / congregation.
-   Currently a free Mixkit stock clip ("Burning candles inside a church", Mixkit licence).
-   To use your own footage, put the file next to this page and set HERO_MP4 = "hero.mp4".
-   Set HERO_MP4 = "" to play the latest YouTube service muted instead. */
-const HERO_MP4 = "https://assets.mixkit.co/videos/48540/48540-720.mp4";
-const HERO_YOUTUBE_ID = "IH2NpAoOmmU";
-
-const media = document.getElementById('heroMedia');
-const toggle = document.getElementById('videoToggle');
-const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-if (!reduceMotion) {
-  if (HERO_MP4) {
-    const v = document.createElement('video');
-    Object.assign(v, {src: HERO_MP4, muted: true, loop: true, autoplay: true, playsInline: true});
-    v.addEventListener('canplay', () => v.classList.add('ready'), {once: true});
-    media.appendChild(v);
-    toggle.hidden = false;
-    toggle.onclick = () => {
-      v.paused ? v.play() : v.pause();
-      toggle.setAttribute('aria-label', v.paused ? 'Play background video' : 'Pause background video');
-      toggle.innerHTML = v.paused ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>' : '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h3v14H7zM14 5h3v14h-3z"/></svg>';
-    };
-  } else {
-    const f = document.createElement('iframe');
-    f.src = `https://www.youtube-nocookie.com/embed/${HERO_YOUTUBE_ID}?autoplay=1&mute=1&loop=1&playlist=${HERO_YOUTUBE_ID}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&start=30`;
-    f.allow = 'autoplay; encrypted-media';
-    f.tabIndex = -1;
-    f.title = 'Background video';
-    f.addEventListener('load', () => setTimeout(() => f.classList.add('ready'), 1200));
-    media.appendChild(f);
-  }
-}
-
 /* header + menu */
 const header = document.getElementById('top');
 const onScroll = () => header.classList.toggle('solid', scrollY > 40);
